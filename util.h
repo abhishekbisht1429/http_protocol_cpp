@@ -3,8 +3,8 @@
 //
 
 
-#ifndef ISJ_RE_22_14571_UTIL_H
-#define ISJ_RE_22_14571_UTIL_H
+#ifndef HTTP_PROTOCOL_CPP_UTIL_H
+#define HTTP_PROTOCOL_CPP_UTIL_H
 #include <functional>
 #include <map>
 #include <string_view>
@@ -53,4 +53,4 @@ namespace tb_util {
     void output_bytes(std::ostream &os, bytes &b);
 };
 
-#endif //ISJ_RE_22_14571_UTIL_H
+#endif //HTTP_PROTOCOL_CPP_UTIL_H

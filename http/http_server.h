@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_HTTP_SERVER_H
-#define ISJ_RE_22_14571_HTTP_SERVER_H
+#ifndef HTTP_PROTOCOL_CPP_HTTP_SERVER_H
+#define HTTP_PROTOCOL_CPP_HTTP_SERVER_H
 #include "../net_socket/sock_address.h"
 #include "request.h"
 #include "response.h"
@@ -71,4 +71,4 @@ namespace http {
 
     };
 }
-#endif //ISJ_RE_22_14571_HTTP_SERVER_H
+#endif //HTTP_PROTOCOL_CPP_HTTP_SERVER_H

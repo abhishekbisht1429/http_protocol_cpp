@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_SOCK_ADDRESS_H
-#define ISJ_RE_22_14571_SOCK_ADDRESS_H
+#ifndef HTTP_PROTOCOL_CPP_SOCK_ADDRESS_H
+#define HTTP_PROTOCOL_CPP_SOCK_ADDRESS_H
 
 #include "ipv4_address.h"
 namespace net_socket {
@@ -21,4 +21,4 @@ namespace net_socket {
 
 } // net_socket
 
-#endif //ISJ_RE_22_14571_SOCK_ADDRESS_H
+#endif //HTTP_PROTOCOL_CPP_SOCK_ADDRESS_H

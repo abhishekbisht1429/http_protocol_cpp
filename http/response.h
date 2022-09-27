@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_RESPONSE_H
-#define ISJ_RE_22_14571_RESPONSE_H
+#ifndef HTTP_PROTOCOL_CPP_RESPONSE_H
+#define HTTP_PROTOCOL_CPP_RESPONSE_H
 #include "header.h"
 #include "http_exception.h"
 
@@ -105,4 +105,4 @@ namespace http {
     };
 }
 
-#endif //ISJ_RE_22_14571_RESPONSE_H
+#endif //HTTP_PROTOCOL_CPP_RESPONSE_H

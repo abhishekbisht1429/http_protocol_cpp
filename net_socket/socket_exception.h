@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_SOCKET_EXCEPTION_H
-#define ISJ_RE_22_14571_SOCKET_EXCEPTION_H
+#ifndef HTTP_PROTOCOL_CPP_EXCEPTION_H
+#define HTTP_PROTOCOL_CPP_EXCEPTION_H
 #include <exception>
 #include <string>
 namespace net_socket {
@@ -66,4 +66,4 @@ namespace net_socket {
     class broken_pipe_exception : public socket_exception {};
 
 }
-#endif //ISJ_RE_22_14571_SOCKET_EXCEPTION_H
+#endif //HTTP_PROTOCOL_CPP_EXCEPTION_H

@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_REQUEST_H
-#define ISJ_RE_22_14571_REQUEST_H
+#ifndef HTTP_PROTOCOL_CPP_REQUEST_H
+#define HTTP_PROTOCOL_CPP_REQUEST_H
 #include "header.h"
 #include "http_exception.h"
 
@@ -78,4 +78,4 @@ namespace http {
 
 } // http
 
-#endif //ISJ_RE_22_14571_REQUEST_H
+#endif //HTTP_PROTOCOL_CPP_REQUEST_H

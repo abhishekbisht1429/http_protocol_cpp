@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_HTTP_CLIENT_H
-#define ISJ_RE_22_14571_HTTP_CLIENT_H
+#ifndef HTTP_PROTOCOL_CPP_HTTP_CLIENT_H
+#define HTTP_PROTOCOL_CPP_HTTP_CLIENT_H
 #include "../net_socket/inet_socket.h"
 #include "../net_socket/sock_address.h"
 #include "response.h"
@@ -42,4 +42,4 @@ namespace http {
 
 } // http
 
-#endif //ISJ_RE_22_14571_HTTP_CLIENT_H
+#endif //HTTP_PROTOCOL_CPP_HTTP_CLIENT_H

@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef ISJ_RE_22_14571_HTTP_EXCEPTION_H
-#define ISJ_RE_22_14571_HTTP_EXCEPTION_H
+#ifndef HTTP_PROTOCOL_CPP_HTTP_EXCEPTION_H
+#define HTTP_PROTOCOL_CPP_HTTP_EXCEPTION_H
 #include <string>
 #include <exception>
 namespace http {
@@ -38,4 +38,4 @@ namespace http {
         remote_end_closed_exception() : http_exception("remote end closed") {}
     };
 }
-#endif //ISJ_RE_22_14571_HTTP_EXCEPTION_H
+#endif //HTTP_PROTOCOL_CPP_HTTP_EXCEPTION_H
