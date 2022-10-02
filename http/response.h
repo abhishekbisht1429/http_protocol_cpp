@@ -2,10 +2,11 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_RESPONSE_H
-#define HTTP_PROTOCOL_CPP_RESPONSE_H
+#ifndef ISJ_RE_22_14571_RESPONSE_H
+#define ISJ_RE_22_14571_RESPONSE_H
 #include "header.h"
 #include "http_exception.h"
+#include <map>
 
 namespace http {
 
@@ -34,26 +35,26 @@ namespace http {
         status _status;
         std::string status_txt;
         std::map <std::string, header> headers;
-        tb_util::bytes body;
+        std::string body;
 
     public:
         response(version _version,
                  status _status,
                  std::string status_txt,
                  const std::map <std::string, header> &headers,
-                 tb_util::bytes body);
+                 std::string body);
 
         response();
 
         response(status _status, std::string status_txt);
 
-        tb_util::bytes serialize();
+        std::string serialize();
 
-        static response deserialize(tb_util::bytes res) {
+        static response deserialize(std::string res) {
             try {
-                int pos = res.find(tb_util::s2b(CRLF + CRLF));
-                std::string res_head = tb_util::b2s(res.substr(0, pos + 1));
-                tb_util::bytes body = res.substr(pos + 4);
+                int pos = res.find(CRLF + CRLF);
+                std::string res_head = res.substr(0, pos + 1);
+                std::string body = res.substr(pos + 4);
 
                 /* deserialize header */
                 std::vector <std::string> lines = tb_util::tokenize(res_head, CRLF);
@@ -89,7 +90,7 @@ namespace http {
 
         std::string get_header(std::string key);
 
-        tb_util::bytes get_body();
+        std::string get_body();
 
         void set_version(version v);
 
@@ -101,8 +102,8 @@ namespace http {
 
         void remove_header(std::string key);
 
-        void set_body(tb_util::bytes body);
+        void set_body(std::string body);
     };
 }
 
-#endif //HTTP_PROTOCOL_CPP_RESPONSE_H
+#endif //ISJ_RE_22_14571_RESPONSE_H

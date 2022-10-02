@@ -53,56 +53,42 @@ namespace tb_util {
             return path1 + "/" + path2;
     }
 
-    std::string home = join("/home", getenv("USERNAME"));
-    std::string expand_tilde(std::string path) {
-        if(path.size() > 0 && path[0] == '~') {
-            if(path.size()>1 && path[1] == '/')
-                return join(home, path.substr(2));
-            else if(path.size() == 1)
-                return home;
-        }
-        return path;
-    }
+//    std::string home = join("/home", getenv("USERNAME"));
+//    std::string expand_tilde(std::string path) {
+//        if(path.size() > 0 && path[0] == '~') {
+//            if(path.size()>1 && path[1] == '/')
+//                return join(home, path.substr(2));
+//            else if(path.size() == 1)
+//                return home;
+//        }
+//        return path;
+//    }
+//
+//    std::vector<std::string> tokenize_command(std::string inp) {
+//        std::vector<std::string> res;
+//        std::regex reg("([^\"]\\S*|\".+?\")\\s*");
+//        std::smatch match;
+//        while(regex_search(inp, match, reg)) {
+//            std::string str = trim(match.str());
+//            if(str[0] == '"')
+//                str = str.substr(1, str.size()-2);
+//
+//            res.push_back(str);
+//            inp = match.suffix().str();
+//        }
+//        for(int i=1; i<res.size(); ++i)
+//            res[i] = expand_tilde(res[i]);
+//
+//        return res;
+//    }
 
-    std::vector<std::string> tokenize_command(std::string inp) {
-        std::vector<std::string> res;
-        std::regex reg("([^\"]\\S*|\".+?\")\\s*");
-        std::smatch match;
-        while(regex_search(inp, match, reg)) {
-            std::string str = trim(match.str());
-            if(str[0] == '"')
-                str = str.substr(1, str.size()-2);
-
-            res.push_back(str);
-            inp = match.suffix().str();
-        }
-        for(int i=1; i<res.size(); ++i)
-            res[i] = expand_tilde(res[i]);
-
-        return res;
-    }
-
-    bytes s2b(std::string str) {
-        bytes bs;
-        for(int i=0; i<str.size(); ++i)
-            bs += (unsigned char)str[i];
-        return bs;
-    }
-
-    std::string b2s(bytes bs) {
-        std::string str;
-        for(int i=0; i<bs.size(); ++i)
-            str += (char)bs[i];
-        return str;
-    }
-
-    bytes serialize_bytes_vec(std::vector<bytes> vec) {
-        bytes out;
+    std::string serialize_string_vec(std::vector<std::string> vec) {
+        std::string out;
         for(auto val : vec) {
             // store the length of val
             uint32_t len = val.length();
             for(int i=0; i<4; ++i) {
-                out.push_back((unsigned char)(len & 255));
+                out.push_back((char)(len & 255u));
                 len >>= 8;
             }
             out += val;
@@ -110,13 +96,13 @@ namespace tb_util {
         return out;
     }
 
-    std::vector<bytes> deserialize_bytes_vec(bytes inp) {
-        std::vector<bytes> out;
+    std::vector<std::string> deserialize_string_vec(std::string inp) {
+        std::vector<std::string> out;
         int i=0;
         while(i < inp.length()) {
             uint32_t len = 0;
             for(int j=0; j<4; ++j) {
-                uint32_t temp = inp[i+j];
+                uint32_t temp = (unsigned char)inp[i+j];
                 len |= temp << (j*8);
             }
             i += 4;
@@ -126,34 +112,4 @@ namespace tb_util {
         }
         return out;
     }
-
-    void output_bytes(std::ostream &os, bytes &b) {
-        for(auto val : b) {
-            os << (int)val<<" ";
-        }
-        os << std::endl;
-    }
 };
-
-//int main() {
-//    std::vector<tb_util::bytes> vec;
-//    tb_util::bytes b1, b2, b3;
-//    for(int i=0; i<10; ++i) {
-//        b1 += (unsigned char)i;
-//        b2 += (unsigned char)(2 * i);
-//        b3 += (unsigned char)(3 * i);
-//    }
-//    vec.push_back(b1);
-//    vec.push_back(b2);
-//    vec.push_back(b3);
-//
-//    auto sz = tb_util::serialize_bytes_vec(vec);
-//    std::cout<<sz.length()<<"\n";
-//
-//    auto dsz = tb_util::deserialize_bytes_vec(sz);
-//    for(auto b : vec) {
-//        for(unsigned char val : b)
-//            std::cout<<(int)val<<" ";
-//        std::cout<<"\n";
-//    }
-//}

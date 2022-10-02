@@ -4,28 +4,31 @@
 
 #include "../net_socket/socket_exception.h"
 #include "http_client.h"
+#include <iostream>
+#include <functional>
+#include <thread>
 
 namespace http {
     response http_client::read_response() {
         /* read response from server */
-        tb_util::bytes msg_header, msg_body;
+        std::string msg_header, msg_body;
         int pos_hend;
         char buf[1024];
         int read_count = 0;
-        std::cout<<"reading\n";
+        std::cout<<"reading bytes from socket...\n";
         /* reading header part */
         while((read_count = sock.read_bytes(buf, 1024)) > 0) {
-            std::cout<<"read count: "<<read_count<<"\n";
-            tb_util::bytes temp;
+//            std::cout<<"read count: "<<read_count<<"\n";
+            std::string temp;
             for(int i=0; i<read_count; ++i)
                 temp += buf[i];
 
             /* find end of header */
-            pos_hend = temp.find(tb_util::s2b(CRLF + CRLF));
+            pos_hend = temp.find(CRLF + CRLF);
             if(pos_hend != std::string::npos) {
                 /* end of request header found */
                 msg_header += temp.substr(0, pos_hend);
-                msg_header += tb_util::s2b(CRLF + CRLF);
+                msg_header += CRLF + CRLF;
 
                 msg_body += temp.substr(pos_hend+4);
                 break;
@@ -35,9 +38,11 @@ namespace http {
         if(read_count == 0 && msg_header.size() == 0)
             throw remote_end_closed_exception();
 
-        /* parsing request header */
-        std::cout<<"parsing\n";
-        std::cout << "message_header: " << tb_util::b2s(msg_header) << "\n";
+        /* parsing request/response header */
+//        std::cout<<"parsing header\n";
+//        std::cout << "message_header:\n-----------------------\n";
+//        std::cout<<msg_header;
+//        std::cout<<"\n-----------------------\n";
         http::response res = http::response::deserialize(msg_header);
         /* get Content-Length */
         int len = 0;
@@ -61,17 +66,14 @@ namespace http {
     }
 
     void http_client::write_request(request req) {
-        tb_util::bytes data = req.serialize();
+        std::string data = req.serialize();
         // std::cout<<"data:\n"<<b2s(data)<<"\n";
         int to_send = data.size();
-        std::cout<<"to_send: "<<to_send<<"\n";
+        std::cout<<"Number of bytes to send: "<<to_send<<"\n";
         while(to_send>0) {
-            std::cout<<"to_send: "<<to_send<<"\n";
             to_send -= sock.write_bytes((void*)data.c_str(), to_send);
         }
-        std::cout<<"to_send: "<<to_send<<"\n";
         std::cout<<"client sent request\n";
-        std::cout<<"waiting for response\n";
     }
 
     void http_client::reconnect() {
@@ -102,8 +104,9 @@ namespace http {
         while(1) {
             try {
                 write_request(req);
+                std::cout<<"\n--------------Waiting for response------------\n";
                 auto res = read_response();
-                std::cout<<"response from server:\n";
+                std::cout<<"\n--------------Response from server------------\n";
                 std::cout<<http::to_string(res.get_status())<<": "<<res.get_status_text()<<"\n";
                 // std::cout<<b2s(res.serialize())<<"\n";
                 return res;

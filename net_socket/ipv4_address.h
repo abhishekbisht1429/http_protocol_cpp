@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_IPV4_ADDRESS_H
-#define HTTP_PROTOCOL_CPP_IPV4_ADDRESS_H
+#ifndef ISJ_RE_22_14571_IPV4_ADDRESS_H
+#define ISJ_RE_22_14571_IPV4_ADDRESS_H
 #include <string>
 namespace net_socket {
 
@@ -18,4 +18,4 @@ namespace net_socket {
 
 } // net_socket
 
-#endif //HTTP_PROTOCOL_CPP_IPV4_ADDRESS_H
+#endif //ISJ_RE_22_14571_IPV4_ADDRESS_H

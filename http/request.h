@@ -2,10 +2,11 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_REQUEST_H
-#define HTTP_PROTOCOL_CPP_REQUEST_H
+#ifndef ISJ_RE_22_14571_REQUEST_H
+#define ISJ_RE_22_14571_REQUEST_H
 #include "header.h"
 #include "http_exception.h"
+#include <map>
 
 namespace http {
 
@@ -14,23 +15,23 @@ namespace http {
         version _version;
         std::string resource;
         std::map<std::string, header> headers;
-        tb_util::bytes body;
+        std::string body;
 
-        void init();
     public:
         request(method _method, std::string resource, version _version,
-                std::map<std::string, header> &headers, tb_util::bytes body);
+                std::map<std::string, header> &headers, std::string body);
         request(method _method, std::string resource);
         request();
 
-        tb_util::bytes serialize();
+        std::string serialize();
 
-        static request deserialize(tb_util::bytes req) {
+        static request deserialize(std::string req) {
             try {
-                int pos = req.find(tb_util::s2b(CRLF + CRLF));
-                std::string req_head = tb_util::b2s(req.substr(0, pos + 1));
-                tb_util::bytes body = req.substr(pos + 4);
-
+                int pos = req.find(CRLF + CRLF);
+                std::string req_head = req.substr(0, pos + 1);
+                std::string body = req.substr(pos + 4);
+//TODO: fix issues in line 37 - when number of keywords is large, there is some issue. use string instead of bytes
+// first.
                 /* deserialize header */
                 std::vector<std::string> lines = tb_util::tokenize(req_head, CRLF);
                 std::vector<std::string> segs = tb_util::tokenize(lines[0], SPACE);
@@ -59,7 +60,7 @@ namespace http {
 
         void set_header(std::string key, std::string value);
 
-        void set_body(tb_util::bytes &body);
+        void set_body(std::string &body);
 
         void remove_header(std::string key);
 
@@ -73,9 +74,9 @@ namespace http {
 
         std::string get_header(std::string key);
 
-        tb_util::bytes get_body();
+        std::string get_body();
     };
 
 } // http
 
-#endif //HTTP_PROTOCOL_CPP_REQUEST_H
+#endif //ISJ_RE_22_14571_REQUEST_H

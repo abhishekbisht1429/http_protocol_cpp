@@ -2,13 +2,17 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_HTTP_SERVER_H
-#define HTTP_PROTOCOL_CPP_HTTP_SERVER_H
+#ifndef ISJ_RE_22_14571_HTTP_SERVER_H
+#define ISJ_RE_22_14571_HTTP_SERVER_H
 #include "../net_socket/sock_address.h"
 #include "request.h"
 #include "response.h"
 #include "../net_socket/inet_server_socket.h"
 #include "../net_socket/socket_exception.h"
+#include <iostream>
+#include <functional>
+#include <thread>
+
 namespace http {
     class http_server {
         constexpr static int MAX_CONN = 10;
@@ -27,16 +31,16 @@ namespace http {
         // template<typename Callback>
         // static void handle_client(net_socket::inet_socket &sock, Callback &callback, http_server &server) {
         static void handle_client(net_socket::inet_socket sock,
-                                               std::function<response(request, net_socket::sock_address)> callback,
-                                               http_server &server) {
-            std::cout<<"http_server: handling client by "<<std::this_thread::get_id()<<"\n";
+                                  const std::function<response(request, net_socket::sock_address)>& callback,
+                                  http_server &server) {
+            std::cout<<"Thread "<<std::this_thread::get_id()<<" Handling new connection\n";
 
             while(1) {
                 try {
                     http::request req = server.read_request(sock);
-                    std::cout<<"client request data: \n";
-                    std::cout << tb_util::b2s(req.serialize()) << "\n";
-                    std::cout<<"calling callback\n";
+//                    std::cout<<"client request data: \n";
+//                    std::cout << req.serialize() << "\n";
+//                    std::cout<<"calling callback\n";
                     server.write_response(callback(req,
                                                    sock.get_remote_address()), sock);
                 } catch(remote_end_closed_exception &rece) {
@@ -61,8 +65,8 @@ namespace http {
             }
             sock.close_socket();
 
-            std::cout<<"http_server: client request handled\n";
-            std::cout<<std::this_thread::get_id()<<" exiting\n";
+            std::cout<<"client request handled\n";
+            std::cout<<"Thread "<<std::this_thread::get_id()<<" exiting\n";
         }
 
         void serve(std::function<response(request, net_socket::sock_address)> callback);
@@ -71,4 +75,4 @@ namespace http {
 
     };
 }
-#endif //HTTP_PROTOCOL_CPP_HTTP_SERVER_H
+#endif //ISJ_RE_22_14571_HTTP_SERVER_H

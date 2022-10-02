@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_INET_SOCKET_H
-#define HTTP_PROTOCOL_CPP_INET_SOCKET_H
+#ifndef ISJ_RE_22_14571_INET_SOCKET_H
+#define ISJ_RE_22_14571_INET_SOCKET_H
 
 #include "sock_address.h"
 namespace net_socket {
@@ -40,4 +40,4 @@ namespace net_socket {
 
 } // net_socket
 
-#endif //HTTP_PROTOCOL_CPP_INET_SOCKET_H
+#endif //ISJ_RE_22_14571_INET_SOCKET_H

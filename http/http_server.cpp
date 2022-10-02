@@ -4,25 +4,26 @@ namespace http {
     request http_server::read_request(net_socket::inet_socket &sock) {
         /* read request from cient */
         request req;
-        tb_util::bytes msg_header, msg_body;
-        int pos_hend;
         char buf[1024];
+        int pos_hend;
         int read_count;
-        std::cout<<"reading\n";
+        std::string msg_header, msg_body;
+
+        //TODO: Later find a way for reading request with very large body
 
         /* reading header part */
         while((read_count = sock.read_bytes(buf, 1024)) > 0) {
-            std::cout<<"read count: "<<read_count<<"\n";
-            tb_util::bytes temp;
+//            std::cout<<"read count: "<<read_count<<"\n";
+            std::string temp;
             for(int i=0; i<read_count; ++i)
                 temp += buf[i];
 
             /* find end of header */
-            pos_hend = temp.find(tb_util::s2b(CRLF + CRLF));
+            pos_hend = temp.find(CRLF + CRLF);
             if(pos_hend != std::string::npos) {
                 /* end of request header found */
                 msg_header += temp.substr(0, pos_hend);
-                msg_header += tb_util::s2b(CRLF + CRLF);
+                msg_header += CRLF + CRLF;
 
                 msg_body += temp.substr(pos_hend+4);
                 break;
@@ -33,7 +34,7 @@ namespace http {
             throw remote_end_closed_exception();
 
         /* parsing request header */
-        std::cout<<"parsing\n";
+//        std::cout<<"parsing header\n";
         req = http::request::deserialize(msg_header);
         /* check if Content-Length is available */
         int len = 0;
@@ -57,12 +58,11 @@ namespace http {
     }
 
     void http_server::write_response(response res, net_socket::inet_socket &sock) {
-        tb_util::bytes data = res.serialize();
+        std::string data = res.serialize();
         // std::cout<<"data:\n"<<b2s(data)<<"\n";
         int to_send = data.size();
-        std::cout<<"to_send: "<<to_send<<"\n";
+        std::cout<<"Number of bytes to send: "<<to_send<<"\n";
         while(to_send>0) {
-            std::cout<<"to_send: "<<to_send<<"\n";
             to_send -= sock.write_bytes((void*)data.c_str(), to_send);
         }
     }
@@ -87,9 +87,10 @@ namespace http {
             server_sock.sock_listen(MAX_CONN);
             std::vector<std::thread> threads;
             while(1) {
-                std::cout<<std::this_thread::get_id()<<" waiting for new connection\n";
+                std::cout<<"Main Thread "<<std::this_thread::get_id()<<": waiting for new connection\n";
                 net_socket::inet_socket sock = server_sock.accept_connection();
-                std::cout<<std::this_thread::get_id()<<" connected\n";
+                std::cout<<"Main Thread "<<std::this_thread::get_id()<<": received a connection\n";
+                std::cout<<"Main Thread "<<std::this_thread::get_id()<<": delegating connection to worker thread...\n";
 
                 /* create a seperate thread to handle the client */
                 threads.push_back(std::thread(handle_client,

@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#ifndef HTTP_PROTOCOL_CPP_HEADER_H
-#define HTTP_PROTOCOL_CPP_HEADER_H
+#ifndef ISJ_RE_22_14571_HEADER_H
+#define ISJ_RE_22_14571_HEADER_H
 #include <string>
 #include <vector>
 #include "../util.h"
@@ -60,4 +60,4 @@ namespace http {
 }
 
 
-#endif //HTTP_PROTOCOL_CPP_HEADER_H
+#endif //ISJ_RE_22_14571_HEADER_H

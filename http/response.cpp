@@ -57,7 +57,7 @@ namespace http {
                        status _status,
                        std::string status_txt,
                        const std::map <std::string, header> &headers,
-                       tb_util::bytes body) :
+                       std::string body) :
             _version(_version), _status(_status),
             status_txt(status_txt), headers(headers), body(body) {}
 
@@ -70,24 +70,24 @@ namespace http {
         add_header("Content-Length", "0");
     }
 
-    tb_util::bytes response::serialize() {
-        tb_util::bytes bstr;
-        bstr += tb_util::s2b(to_string(_version));
-        bstr += tb_util::s2b(SPACE);
-        bstr += tb_util::s2b(to_string(_status));
-        bstr += tb_util::s2b(SPACE);
-        bstr += tb_util::s2b(status_txt);
-        bstr += tb_util::s2b(CRLF);
+    std::string response::serialize() {
+        std::string str;
+        str += to_string(_version);
+        str += SPACE;
+        str += to_string(_status);
+        str += SPACE;
+        str += status_txt;
+        str += CRLF;
 
         for (auto &p: headers) {
-            bstr += tb_util::s2b(p.second.serialize());
-            bstr += tb_util::s2b(CRLF);
+            str += p.second.serialize();
+            str += CRLF;
         }
 
-        bstr += tb_util::s2b(CRLF);
-        bstr += body;
+        str += CRLF;
+        str += body;
 
-        return bstr;
+        return str;
     }
 
     version response::get_version() {
@@ -114,7 +114,7 @@ namespace http {
         return headers[key].value;
     }
 
-    tb_util::bytes response::get_body() {
+    std::string response::get_body() {
         return body;
     }
 
@@ -139,7 +139,7 @@ namespace http {
             headers.erase(key);
     }
 
-    void response::set_body(tb_util::bytes body) {
+    void response::set_body(std::string body) {
         this->body = body;
     }
 }

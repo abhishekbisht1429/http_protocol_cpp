@@ -5,43 +5,38 @@
 #include "request.h"
 
 namespace http {
-    void request::init() {
-        this->set_header("Content-Length", "0");
-    }
     request::request(method _method, std::string resource, version _version,
-                     std::map<std::string, header> &headers, tb_util::bytes body):
+                     std::map<std::string, header> &headers, std::string body):
     _method(_method), resource(resource), headers(headers), _version(_version),
-    body(body) {
-        init();
-    }
+    body(body) {}
 
     request::request(method _method, std::string resource): _method(_method), resource(resource),
     _version(version::HTTP_2_0) {
-        init();
+        this->set_header("Content-Length", "0");
     }
 
     request::request() {
-        init();
+        this->set_header("Content-Length", "0");
     }
 
-    tb_util::bytes request::serialize() {
-        tb_util::bytes bstr;
-        bstr += tb_util::s2b(to_string(_method));
-        bstr += tb_util::s2b(SPACE);
-        bstr += tb_util::s2b(this->resource);
-        bstr += tb_util::s2b(SPACE);
-        bstr += tb_util::s2b(to_string(_version));
-        bstr += tb_util::s2b(CRLF);
+    std::string request::serialize() {
+        std::string str;
+        str += to_string(_method);
+        str += SPACE;
+        str += this->resource;
+        str += SPACE;
+        str += to_string(_version);
+        str += CRLF;
 
         for(auto &p : headers) {
-            bstr += tb_util::s2b(p.second.serialize() + CRLF);
+            str += p.second.serialize() + CRLF;
         }
 
-        bstr += tb_util::s2b(CRLF);
+        str += CRLF;
 
-        bstr += body;
+        str += body;
 
-        return bstr;
+        return str;
     }
 
     void request::set_method(method m) {
@@ -60,7 +55,7 @@ namespace http {
         headers[key] = header(key, value);
     }
 
-    void request::set_body(tb_util::bytes &body) {
+    void request::set_body(std::string &body) {
         this->body = body;
         this->set_header("Content-Length", std::to_string(body.length()));
     }
@@ -94,7 +89,7 @@ namespace http {
         return headers[key].value;
     }
 
-    tb_util::bytes request::get_body() {
+    std::string request::get_body() {
         return body;
     }
 } // http

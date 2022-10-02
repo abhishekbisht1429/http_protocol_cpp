@@ -3,27 +3,27 @@
 //
 
 
-#ifndef HTTP_PROTOCOL_CPP_UTIL_H
-#define HTTP_PROTOCOL_CPP_UTIL_H
-#include <functional>
-#include <map>
-#include <string_view>
-#include <sys/socket.h>
-#include <poll.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <exception>
-#include <string>
+#ifndef ISJ_RE_22_14571_UTIL_H
+#define ISJ_RE_22_14571_UTIL_H
+//#include <functional>
+//#include <map>
+//#include <string_view>
+//#include <sys/socket.h>
+//#include <poll.h>
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
+//#include <unistd.h>
+//#include <exception>
+//#include <string>
 #include <vector>
-#include <iostream>
-#include <thread>
-#include <regex>
-#include <cstring>
+//#include <iostream>
+//#include <thread>
+//#include <regex>
+//#include <cstring>
 
 namespace tb_util {
     //TODO: remove the usuage of bytes and replace with string
-    typedef std::basic_string<uint8_t> bytes;
+//    typedef std::basic_string<uint8_t> bytes;
 //    typedef std::basic_istringstream<uint8_t> bytes_istream;
 //    typedef std::basic_ostringstream<uint8_t> bytes_ostream;
 
@@ -42,15 +42,15 @@ namespace tb_util {
 
     std::vector<std::string> tokenize_command(std::string inp);
 
-    bytes s2b(std::string str);
+//    bytes s2b(std::string str);
+//
+//    std::string b2s(bytes bs);
 
-    std::string b2s(bytes bs);
+    std::string serialize_string_vec(std::vector<std::string> vec);
 
-    bytes serialize_bytes_vec(std::vector<bytes> vec);
+    std::vector<std::string> deserialize_string_vec(std::string b);
 
-    std::vector<bytes> deserialize_bytes_vec(bytes b);
-
-    void output_bytes(std::ostream &os, bytes &b);
+//    void output_bytes(std::ostream &os, bytes &b);
 };
 
-#endif //HTTP_PROTOCOL_CPP_UTIL_H
+#endif //ISJ_RE_22_14571_UTIL_H

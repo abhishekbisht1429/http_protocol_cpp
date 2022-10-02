@@ -109,9 +109,9 @@ namespace net_socket {
     }
 
     int inet_socket::read_bytes(void *buf, int count) {
-        std::cout<<std::this_thread::get_id()<<" net_socket: reading bytes "
-                                               "from: "<<sock<<"\n";
-        std::cout<<std::this_thread::get_id()<<" has net_socket "<<sock<<"\n";
+//        std::cout<<std::this_thread::get_id()<<" net_socket: reading bytes "
+//                                               "from: "<<sock<<"\n";
+//        std::cout<<std::this_thread::get_id()<<" has net_socket "<<sock<<"\n";
         pollfd pfd;
         pfd.fd = sock;
         pfd.events = POLLIN;
@@ -132,7 +132,7 @@ namespace net_socket {
     }
 
     int inet_socket::write_bytes(void *buf, int count) {
-        std::cout<<"net_socket: writing bytes\n";
+//        std::cout<<"net_socket: writing bytes\n";
         int actual_count;
         try {
             if((actual_count = send(sock, buf, count,
@@ -154,7 +154,7 @@ namespace net_socket {
     }
 
     void inet_socket::close_socket() {
-        std::cout<<std::this_thread::get_id()<<"closing net_socket: "<<sock<<"\n";
+        std::cout<<"Thread "<<std::this_thread::get_id()<<": closing net_socket "<<sock<<"\n";
         close(sock);
     }
 } // net_socket
