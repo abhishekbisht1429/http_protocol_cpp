@@ -24,3 +24,4 @@ add_library(
         http/http_server.cpp
         http/http_client.cpp
 )
+target_link_libraries(http net_socket util)
