@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#include "sock_address.h"
-#include "../util.h"
+#include "net_socket/sock_address.h"
+#include "util.h"
 
 namespace net_socket {
     sock_address::sock_address(): ip("0.0.0.0"), port(0){

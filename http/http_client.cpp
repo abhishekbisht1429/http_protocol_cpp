@@ -2,8 +2,8 @@
 // Created by abhishek on 25/9/22.
 //
 
-#include "../net_socket/socket_exception.h"
-#include "http_client.h"
+#include "net_socket/socket_exception.h"
+#include "http/http_client.h"
 #include <iostream>
 #include <functional>
 #include <thread>

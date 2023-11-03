@@ -4,6 +4,7 @@ project(http_protocol_cpp)
 set(CMAKE_CXX_STANDARD 14)
 
 add_library(util util.cpp)
+target_include_directories(util PUBLIC include/net)
 
 add_library(
         net_socket
@@ -13,6 +14,7 @@ add_library(
         net_socket/sock_address.cpp
         net_socket/socket_exception.cpp
 )
+target_include_directories(net_socket PUBLIC  include/net)
 target_link_libraries(net_socket util)
 
 add_library(
@@ -24,4 +26,5 @@ add_library(
         http/http_server.cpp
         http/http_client.cpp
 )
+target_include_directories(http PUBLIC include/net)
 target_link_libraries(http net_socket util)

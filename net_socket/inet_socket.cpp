@@ -13,8 +13,8 @@
 #include<thread>
 #include<regex>
 
-#include "socket_exception.h"
-#include "inet_socket.h"
+#include "net_socket/socket_exception.h"
+#include "net_socket/inet_socket.h"
 
 namespace net_socket {
     void inet_socket::throw_exception(int err) {

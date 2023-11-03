@@ -3,8 +3,8 @@
 #include<arpa/inet.h>
 #include<unistd.h>
 #include<iostream>
-#include "inet_server_socket.h"
-#include "../net_socket/socket_exception.h"
+#include "net_socket/inet_server_socket.h"
+#include "net_socket/socket_exception.h"
 
 namespace net_socket {
     /* server net_socket */
